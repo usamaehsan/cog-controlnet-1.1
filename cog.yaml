@@ -1,0 +1,54 @@
+#replace cog.yml
+
+# Configuration for Cog ⚙️
+# Reference: https://github.com/replicate/cog/blob/main/docs/yaml.md
+
+build:
+  # set to true if your model requires a GPU
+  gpu: true
+
+  # a list of ubuntu apt packages to install
+  system_packages:
+    - "python3-opencv"
+    - "libgl1-mesa-glx"
+    - "libglib2.0-0"
+
+  # python version in the form '3.8' or '3.8.12'
+  python_version: "3.8"
+
+  # a list of packages in the format <package-name>==<version>
+  # packages required: torch torchvision numpy gradio albumentations opencv-contrib-python imageio imageio-ffmpeg pytorch-lightning omegaconf test-tube streamlit einops transformers webdataset kornia open_clip_torch invisible-watermark streamlit-drawable-canvas torchmetrics timm addict yapf prettytable
+  python_packages:
+    - "torch==1.13.0"
+    - "torchvision==0.14.0"
+    - "numpy==1.21.6"
+    - "gradio==3.18.0"
+    - "albumentations==1.2.1"
+    - "opencv-contrib-python==4.6.0.66"
+    - "imageio==2.9.0"
+    - "imageio-ffmpeg==0.4.8"
+    - "pytorch-lightning==1.9.1"
+    - "omegaconf==2.3.0"
+    - "test-tube==0.7.5"
+    - "streamlit==1.18.1"
+    - "einops==0.6.0"
+    - "transformers==4.26.1"
+    - "webdataset==0.2.33"
+    - "kornia==0.6.9"
+    - "open_clip_torch==2.11.1"
+    - "invisible-watermark==0.1.5"
+    - "streamlit-drawable-canvas==0.9.2"
+    - "torchmetrics==0.11.1"
+    - "timm==0.6.12"
+    - "addict==2.4.0"
+    - "yapf==0.32.0"
+    - "prettytable==3.6.0"
+    - "basicsr"
+
+  # commands run after the environment is setup
+  # run:
+  # - "echo env is ready!"
+  # - "echo another command if needed"
+
+# predict.py defines how predictions are run on your model
+predict: "predict.py:Predictor"
