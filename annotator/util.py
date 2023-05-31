@@ -28,15 +28,19 @@ def HWC3(x):
 
 
 def resize_image(input_image, resolution):
+    max_width= resolution
+    max_height= resolution
     H, W, C = input_image.shape
     H = float(H)
     W = float(W)
-    k = float(resolution) / min(H, W)
-    H *= k
-    W *= k
+    width_ratio = float(max_width) / W
+    height_ratio = float(max_height) / H
+    scale_ratio = min(width_ratio, height_ratio)
+    H *= scale_ratio
+    W *= scale_ratio
     H = int(np.round(H / 64.0)) * 64
     W = int(np.round(W / 64.0)) * 64
-    img = cv2.resize(input_image, (W, H), interpolation=cv2.INTER_LANCZOS4 if k > 1 else cv2.INTER_AREA)
+    img = cv2.resize(input_image, (W, H), interpolation=cv2.INTER_LANCZOS4 if scale_ratio > 1 else cv2.INTER_AREA)
     return img
 
 
