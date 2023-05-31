@@ -40,14 +40,13 @@ class Predictor(BasePredictor):
                     choices=['1', '4'],
                     default='1'
                 ),
-                image_resolution: str = Input(
-                    description="Resolution of image (square)",
-                    choices=['256', '512', '768'],
-                    default='512'
+                image_resolution: int = Input(
+                    description="Resolution of image",
+                    default=512
                 ),
                 ddim_steps: int = Input(
                     description="Steps",
-                    default=20
+                    default=10
                 ),
                 strength: float = Input(
                     description="Control strength",
