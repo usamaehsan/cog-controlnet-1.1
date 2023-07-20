@@ -1,0 +1,18 @@
+%cd /home/ubuntu/cog-controlnet-1.1
+!pip install -q gradio einops transformers open_clip_torch pytorch_lightning==1.7.7 omegaconf xformers==0.0.18 triton==2.0.0 basicsr safetensors fvcore
+!sudo apt -y install -qq aria2
+!aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/SG161222/Realistic_Vision_V2.0/resolve/main/Realistic_Vision_V2.0.ckpt -d /home/ubuntu/cog-controlnet-1.1/models -o v1-5-pruned.ckpt
+
+!aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_lineart.pth -d /home/ubuntu/cog-controlnet-1.1/models -o control_v11p_sd15_lineart.pth
+!aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_normalbae.pth -d /home/ubuntu/cog-controlnet-1.1/models -o control_v11p_sd15_normalbae.pth
+!aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_mlsd.pth -d /home/ubuntu/cog-controlnet-1.1/models -o control_v11p_sd15_mlsd.pth
+
+
+!sudo curl -o /usr/local/bin/cog -L https://github.com/replicate/cog/releases/latest/download/cog_`uname -s`_`uname -m`
+!sudo chmod +x /usr/local/bin/cog
+
+
+cd /home/ubuntu/cog-controlnet-1.1
+cog predict -i m.png
+sudo cog login
+sudo cog push r8.im/usamaehsan/controlnet-1.1-x-realistic-vision-v2.0

@@ -31,12 +31,12 @@ class Predictor(BasePredictor):
         self.normal_model.load_state_dict(state_dict, strict=False)
         
         # MLSD
-        self.normal_model_name = "control_v11p_sd15_mlsd"
-        self.normal_model = create_model(f'./models/{self.normal_model_name}.yaml').cuda()
-        self.normal_model.load_state_dict(state_dict, strict=False)
+        self.MLSD_model_name = "control_v11p_sd15_mlsd"
+        self.MLSD_model = create_model(f'./models/{self.MLSD_model_name}.yaml').cuda()
+        self.MLSD_model.load_state_dict(state_dict, strict=False)
 
         # Continue with the rest of your code...
-        self.ddim_sampler = DDIMSampler(self.model)
+        # self.ddim_sampler = DDIMSampler(self.model)
         
 
     def predict(
@@ -134,7 +134,7 @@ class Predictor(BasePredictor):
         if structure == 'lineart':
             outputs = process(
                 self.model,
-                self.ddim_sampler,
+                DDIMSampler(self.model),
                 preprocessor,
                 input_image,
                 prompt,
@@ -153,7 +153,7 @@ class Predictor(BasePredictor):
         elif structure=='normal':
             outputs= normalbae_process(
                 self.normal_model,
-                self.ddim_sampler,
+                DDIMSampler(self.normal_model),
                 preprocessor,
                 input_image,
                 prompt,
@@ -171,8 +171,8 @@ class Predictor(BasePredictor):
             )
         elif structure=='MLSD':
             outputs= mlsd_process(
-                self.normal_model,
-                self.ddim_sampler,
+                self.MLSD_model,
+               DDIMSampler(self.MLSD_model),
                 preprocessor,
                 input_image,
                 prompt,
