@@ -36,7 +36,9 @@ class Predictor(BasePredictor):
         self.MLSD_model.load_state_dict(state_dict, strict=False)
 
         # Continue with the rest of your code...
-        # self.ddim_sampler = DDIMSampler(self.model)
+        self.ddim_sampler = DDIMSampler(self.model)
+        self.normal_ddim_sampler = DDIMSampler(self.normal_model)
+        self.MLSD_ddim_sampler = DDIMSampler(self.MLSD_model)
         
 
     def predict(
@@ -134,7 +136,7 @@ class Predictor(BasePredictor):
         if structure == 'lineart':
             outputs = process(
                 self.model,
-                DDIMSampler(self.model),
+                self.ddim_sampler,
                 preprocessor,
                 input_image,
                 prompt,
@@ -153,7 +155,7 @@ class Predictor(BasePredictor):
         elif structure=='normal':
             outputs= normalbae_process(
                 self.normal_model,
-                DDIMSampler(self.normal_model),
+                self.normal_ddim_sampler,
                 preprocessor,
                 input_image,
                 prompt,
@@ -172,7 +174,7 @@ class Predictor(BasePredictor):
         elif structure=='MLSD':
             outputs= mlsd_process(
                 self.MLSD_model,
-               DDIMSampler(self.MLSD_model),
+                self.MLSD_ddim_sampler,
                 preprocessor,
                 input_image,
                 prompt,
